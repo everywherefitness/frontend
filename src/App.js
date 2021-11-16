@@ -1,5 +1,8 @@
 import './App.css';
-import Register from './components/Register';
+
+import { Route, Routes } from 'react-router-dom'
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
 // import React, { useState } from 'react'
 
 function App() {
@@ -7,8 +10,19 @@ function App() {
   return (
     <div className="App">
 
-      <Register />
-      
+      <Routes>
+
+        <Route
+          element={<Register />}
+          path='/register'
+        />
+
+        <Route
+          element={<Login />}
+          path='/login'
+        />
+
+      </Routes>
     </div>
   );
 }

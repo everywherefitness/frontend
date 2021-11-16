@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const initialFormValues = {
     username: '',
@@ -13,16 +14,19 @@ const initialFormErrors = {
 
 const Login = () => {
 
+    const navigate = useNavigate()
+
     const [ formValues, setFormValues ] = useState(initialFormValues)
     const [ formErrors, setFormErrors ] = useState(initialFormErrors)
     const [ disabled, setDisabled ] = useState(true)
 
     // change handler
     const onChange = e => {
-        const { name, value } = e.target
+        const { name, value, checked, type } = e.target
+        const valueToUse = type === 'checkbox' ? checked : value
         setFormValues({
             ...formValues,
-            [name]: value
+            [name]: valueToUse
         })
         // setFormValues({
         //     ...formValues,
@@ -40,6 +44,9 @@ const Login = () => {
         axios.post(`http://localhost:5000/api/auth/login`, loginAttempt)
             .then(res => {
                 console.log('res', res.data);
+                localStorage.setItem('token', res.data.token)
+                // localStorage.setItem("user_id", res.data.user_id);
+                navigate('/dashboard')
             })
             .catch(err => {
                 console.log('err', err);

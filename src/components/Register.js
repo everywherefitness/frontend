@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-
-
 import axios from 'axios'
 
 const initialFormValues = {
@@ -60,14 +58,14 @@ const Register = () => {
                setFormValues(initialFormValues))
    }
 
-   const onSubmit = e => {
+   const onRegister = e => {
        e.preventDefault()
        formSubmit()
    }
 
    return (
         <div>
-            <form onSubmit = {onSubmit}>
+            <form onSubmit = {onRegister}>
                 <label>
                     Name:
                     <input

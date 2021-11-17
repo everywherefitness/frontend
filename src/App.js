@@ -9,6 +9,9 @@ import InstructorDashboard from './components/Instructor Portal/InstructorDashbo
 import PageNotFound from './components/Auth//Private Route/PageNotFound'
 import AccessDenied from './components/Auth/Private Route/AccessDenied'
 import LandingPage from './components/Landing Page/LandingPage';
+import Enrolled from './components/Client Portal/Client Components/EnrolledClasses'
+import Available from './components/Client Portal/Client Components/AvailableClasses';
+import Profile from './components/Client Portal/Client Components/ClientProfile';
 
 // import React, { useState } from 'react'
 
@@ -48,7 +51,7 @@ function App() {
 
       {/* {Client Related} */}
         <Route
-          path='/:username/dashboard/:user_id'
+          path='/:user_id/:username/dashboard/'
           element={
             <PrivateRoute>
               <ClientDashboard />
@@ -56,9 +59,36 @@ function App() {
           }
         />
 
+        <Route
+          path='/:user_id/:username/enrolled'
+          element={
+            <PrivateRoute>
+              <Enrolled />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/:user_id/:username/available'
+          element={
+            <PrivateRoute>
+              <Available />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/:user_id/:username/profile'
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+
       {/* {Instructor Related} */}
         <Route
-          path='/:username/dashboard/:user_id'
+          path='/:user_id/:username/dashboard/'
           element={
             <PrivateRoute>
               <InstructorDashboard />

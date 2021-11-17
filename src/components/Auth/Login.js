@@ -7,18 +7,18 @@ const initialFormValues = {
     password: ''
 }
 
-const initialFormErrors = {
-    username: '',
-    password: '',
-}
+// const initialFormErrors = {
+//     username: '',
+//     password: '',
+// }
 
 const Login = () => {
 
     const navigate = useNavigate()
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
-    const [ formErrors, setFormErrors ] = useState(initialFormErrors)
-    const [ disabled, setDisabled ] = useState(true)
+    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
+    // const [ disabled, setDisabled ] = useState(true)
 
     // change handler
     const onChange = e => {
@@ -43,15 +43,16 @@ const Login = () => {
 
         axios.post(`http://localhost:5000/api/auth/login`, loginAttempt)
             .then(res => {
-                console.log('res', res.data);
+                const { role_id, user_id, username } = res.data.user
                 localStorage.setItem('token', res.data.token)
-                localStorage.setItem("user_id", res.data.user.user_id);
-                if (res.data.user.role_id === 1) {
+                localStorage.setItem("user_id", user_id);
+                localStorage.setItem("username", username);
+                if (role_id === 1) {
                     navigate('/admin-portal')
-                } else if (res.data.user.role_id === 2) {
-                    navigate(`/${res.data.user.username}/dashboard/${res.data.user.user_id}`)
+                } else if (role_id === 2) {
+                    navigate(`/${user_id}/${username}/dashboard/`)
                 } else {
-                    navigate(`/${res.data.user.username}/dashboard/${res.data.user.user_id}`)
+                    navigate(`/${user_id}/${username}/dashboard/`)
                 }
             })
             .catch(err => {

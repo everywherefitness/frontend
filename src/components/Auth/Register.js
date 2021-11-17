@@ -11,19 +11,19 @@ const initialFormValues = {
     role_id: '',
 }
 
-const initialFormErrors = {
-    name: '',
-    username: '',
-    email: '',
-    password: '',
-    role_id: ''
-}
+// const initialFormErrors = {
+//     name: '',
+//     username: '',
+//     email: '',
+//     password: '',
+//     role_id: ''
+// }
 
 const Register = () => {
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
-    const [ formErrors, setFormErrors ] = useState(initialFormErrors)
-    const [ disabled, setDisabled ] = useState(true)
+    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
+    // const [ disabled, setDisabled ] = useState(true)
 
     // change handler
     const onChange = e => {

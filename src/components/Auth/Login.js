@@ -45,8 +45,14 @@ const Login = () => {
             .then(res => {
                 console.log('res', res.data);
                 localStorage.setItem('token', res.data.token)
-                // localStorage.setItem("user_id", res.data.user_id);
-                navigate('/dashboard')
+                localStorage.setItem("user_id", res.data.user.user_id);
+                if (res.data.user.role_id === 1) {
+                    navigate('/admin-portal')
+                } else if (res.data.user.role_id === 2) {
+                    navigate('/instructor-dashboard')
+                } else {
+                    navigate('/client-dashboard')
+                }
             })
             .catch(err => {
                 console.log('err', err);

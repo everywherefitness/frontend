@@ -9,7 +9,7 @@ const AvailableClasses = () => {
         axiosWithAuth()
             .get('/classes')
             .then(res => {
-                console.log('res', res);
+                // console.log('res', res);
                 setAvailables(res.data)
             })
             .catch(err => {
@@ -27,7 +27,7 @@ const AvailableClasses = () => {
             Available Classes:
             {availables.map((av) => {
                 return(
-                    <ClassCard availableClass={av} />// could refactor into redux so that I can make this more useful across the app
+                    <ClassCard availableClass={av} key={av.class_id} />// could refactor into redux so that I can make this more useful across the app
                 )
             })}
         </div>

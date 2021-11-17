@@ -49,9 +49,9 @@ const Login = () => {
                 if (res.data.user.role_id === 1) {
                     navigate('/admin-portal')
                 } else if (res.data.user.role_id === 2) {
-                    navigate('/instructor-dashboard')
+                    navigate(`/${res.data.user.username}/dashboard/${res.data.user.user_id}`)
                 } else {
-                    navigate('/client-dashboard')
+                    navigate(`/${res.data.user.username}/dashboard/${res.data.user.user_id}`)
                 }
             })
             .catch(err => {

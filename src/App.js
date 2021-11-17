@@ -48,7 +48,7 @@ function App() {
 
       {/* {Client Related} */}
         <Route
-          path='/client-dashboard'
+          path='/:username/dashboard/:user_id'
           element={
             <PrivateRoute>
               <ClientDashboard />
@@ -58,7 +58,7 @@ function App() {
 
       {/* {Instructor Related} */}
         <Route
-          path='/instructor-dashboard'
+          path='/:username/dashboard/:user_id'
           element={
             <PrivateRoute>
               <InstructorDashboard />

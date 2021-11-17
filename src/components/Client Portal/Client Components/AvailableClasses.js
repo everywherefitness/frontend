@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth'
-import ClassCard from './ClassCard';
+
+const user_id = localStorage.getItem('user_id')
 
 const AvailableClasses = () => {
     const [ availables, setAvailables ] = useState([])
@@ -22,12 +23,29 @@ const AvailableClasses = () => {
         getAvailables()
     }, [])
 
+    const joinClassAsClient = (class_id) => {
+        // console.log(class_id);
+        axiosWithAuth()
+            .post(`/users/${user_id}/${class_id}`)
+            .then(something =>{
+                console.log(something);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
     return (
         <div>
             Available Classes:
             {availables.map((av) => {
+                // console.log(av);
+
                 return(
-                    <ClassCard availableClass={av} key={av.class_id} />// could refactor into redux so that I can make this more useful across the app
+                    <div key={av.class_id}>
+                        <h1>{av.name}</h1>
+                        <button onClick={() => joinClassAsClient(av.class_id)}>Join</button>
+                    </div>
                 )
             })}
         </div>

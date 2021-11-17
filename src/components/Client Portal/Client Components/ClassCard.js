@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ClassCard = (props) => {
-    const { availableClass } = props
+// will be a styled component eventually
+
+const ClassCard = () => {
     return (
         <div>
-            {availableClass.name}
             <button>Join</button>
         </div>
     );

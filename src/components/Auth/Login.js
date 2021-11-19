@@ -54,7 +54,6 @@ const Login = (props) => {
                         username: username
                     }
                 })
-                console.log('successful login', props.session)
 
                 if (role_id === 1) {
                     navigate('/admin-portal')

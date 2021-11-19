@@ -1,7 +1,7 @@
 import {
+    SESSION_END,
     SESSION_SET,
     SESSION_START,
-    SESSION_SUCCESS
 } from '../Actions/index'
 
 const initialState = {
@@ -37,13 +37,8 @@ const reducer = (state = initialState, action) => {
                     user: action.payload.user
                 }
             })
-        case(SESSION_SUCCESS):
-            return({
-                ...state,
-                isAuthed: true,
-                isLoading: false,
-                user: action.payload
-            })
+        case(SESSION_END):
+            return(initialState)
         default:
             return state
     }

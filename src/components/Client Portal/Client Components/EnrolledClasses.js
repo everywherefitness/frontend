@@ -13,7 +13,7 @@ const ClientClasses = (props) => {
         axiosWithAuth()
             .get(`/users/${user_id}/classes`)
             .then(res => {
-                // console.log(res.data);
+                console.log(res.data);
                 setMyClasses(res.data)
             })
             .catch(err => {

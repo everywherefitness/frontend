@@ -1,6 +1,6 @@
 import './App.css';
 
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Link } from 'react-router-dom'
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import PrivateRoute from './components/Auth/Private Route/PrivateRoute'
@@ -12,6 +12,7 @@ import LandingPage from './components/Landing Page/LandingPage';
 import Enrolled from './components/Client Portal/Client Components/EnrolledClasses'
 import Available from './components/Client Portal/Client Components/AvailableClasses';
 import Profile from './components/Client Portal/Client Components/ClientProfile';
+import Logout from './components/Auth/Logout';
 
 // import React, { useState } from 'react'
 
@@ -19,6 +20,9 @@ function App() {
 
   return (
     <div className="App">
+
+      <Link to='/login'>Login</Link>
+      <Link to='/logout'>logout</Link>
 
       <Routes>
 
@@ -70,7 +74,7 @@ function App() {
           }
         />
 
-      {/* {Client Classes} */}
+              {/* {Client Classes} */}
         <Route
           path='/:user_id/:username/enrolled'
           element={
@@ -97,6 +101,16 @@ function App() {
           element={
             <PrivateRoute>
               <InstructorDashboard />
+            </PrivateRoute>
+          }
+        />
+
+      {/* ----- {Logout} ----- */}
+        <Route
+          path='/logout'
+          element={
+            <PrivateRoute>
+              <Logout />
             </PrivateRoute>
           }
         />

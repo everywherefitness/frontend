@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 
 const initialFormValues = {
-    name: '',
+    given_name: '',
     username: '',
     email: '',
     password: '',
@@ -40,11 +40,11 @@ const Register = () => {
     // axios [POST] upon submission
     const formSubmit = () => {
         const newAccount = {
-           name: formValues.name.trim(),
-           username: formValues.username.trim(),
-           email: formValues.email.trim(),
-           password: formValues.password.trim(),
-           role_id: formValues.role_id ? 2 : 3
+            given_name: formValues.given_name.trim(),
+            username: formValues.username.trim(),
+            email: formValues.email.trim(),
+            password: formValues.password.trim(),
+            role_id: formValues.role_id ? 2 : 3
        }
     //    axios.post(`https://fitness-4-you.herokuapp.com/api/auth/register`, newAccount)
        axios.post(`http://localhost:5000/api/auth/register`, newAccount)
@@ -70,9 +70,9 @@ const Register = () => {
                     Name:
                     <input
                         type = 'text'
-                        name = 'name'
+                        name = 'given_name'
                         onChange = {onChange}
-                        value = {formValues.name}
+                        value = {formValues.given_name}
                     />
                 </label>
                 

@@ -1,4 +1,8 @@
 import {
+    FETCH_AVAILABLES,
+    SET_AVAILABLES,
+    FETCH_ENROLLED,
+    SET_ENROLLED,
     SESSION_END,
     SESSION_SET,
     SESSION_START,
@@ -10,10 +14,14 @@ const initialState = {
         isAuthed: false,
         session: {
             token: '',
+            classes: {
+                availables: [],
+                enrolled: []
+            },
             user: {
                 role: '',
                 user_id: '',
-                username: ''
+                username: '',
             }
         }
     }
@@ -29,16 +37,54 @@ const reducer = (state = initialState, action) => {
             // console.log('REDUCER', 'state: ', state, 'action.payload', action.payload);
             return({
                 ...state,
-                error: '',
                 isAuthed: true,
                 isLoading: false,
                 session: {
+                    ...state.session,
                     token: action.payload.token,
                     user: action.payload.user
                 }
             })
         case(SESSION_END):
             return(initialState)
+    
+        // -------------- //
+
+        case(FETCH_AVAILABLES):
+            return({
+                ...state,
+                isLoading: true
+            })
+        case(SET_AVAILABLES):
+            return({
+                ...state,
+                isLoading: false,
+                session: {
+                    ...state.session,
+                    classes: {
+                        ...state.session.classes,
+                        availables: action.payload
+                    }
+                }
+            })
+
+        case(FETCH_ENROLLED):
+            return({
+                ...state,
+                isLoading: true
+            })
+        case(SET_ENROLLED):
+            return({
+                ...state,
+                isLoading: false,
+                session: {
+                    ...state.session,
+                    classes: {
+                        ...state.session.classes,
+                        enrolled: action.payload
+                    }
+                }
+            })
         default:
             return state
     }

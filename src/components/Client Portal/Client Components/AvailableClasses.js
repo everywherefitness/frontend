@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth'
 import { connect } from 'react-redux'
+import { fetchAvailables, setAvailables } from '../../../Redux/Actions';
 
 const AvailableClasses = (props) => {
 
     const { user_id } = props.user
-
-    const [ availables, setAvailables ] = useState([])
+    const { availables } = props.availables
+    const { isLoading, fetchAvailables, setAvailables } = props
 
     const getAvailables = () => {
+        fetchAvailables()
         axiosWithAuth()
             .get('/classes')
             .then(res => {
@@ -25,12 +27,18 @@ const AvailableClasses = (props) => {
         getAvailables()
     }, [])
 
+    if (isLoading) {
+        return(
+            <div>Loading...</div>
+        )
+    }
+
     const joinClassAsClient = (class_id) => {
         // console.log(class_id);
         axiosWithAuth()
-            .post(`/users/${user_id}/${class_id}`)
+            .post(`/users/${user_id}/classes/${class_id}`)
             .then(something =>{
-                console.log(something);
+                console.log('something',something);
                 // revisit and make something happen here. returning res.data object
             })
             .catch(err => {
@@ -46,7 +54,7 @@ const AvailableClasses = (props) => {
 
                 return(
                     <div key={av.class_id}>
-                        <h1>{av.name}</h1>
+                        <h1>{av.class_name}</h1>
                         <button onClick={() => joinClassAsClient(av.class_id)}>Join</button>
                     </div>
                 )
@@ -57,8 +65,10 @@ const AvailableClasses = (props) => {
 
 const stateToProps = state => {
     return({
-        user: state.session.user
+        user: state.session.user,
+        availables: state.session.classes,
+        isLoading: state.isLoading
     })
 }
 
-export default connect(stateToProps, {})(AvailableClasses);
+export default connect(stateToProps, { fetchAvailables, setAvailables })(AvailableClasses);

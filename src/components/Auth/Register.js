@@ -9,19 +9,19 @@ const initialFormValues = {
     role_id: '',
 }
 
-// const initialFormErrors = {
-//     name: '',
-//     username: '',
-//     email: '',
-//     password: '',
-//     role_id: ''
-// }
+const initialFormErrors = {
+    name: '',
+    username: '',
+    email: '',
+    password: '',
+    role_id: ''
+}
 
 const Register = () => {
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
-    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
-    // const [ disabled, setDisabled ] = useState(true)
+    const [ formErrors, setFormErrors ] = useState(initialFormErrors)
+    const [ disabled, setDisabled ] = useState(true)
 
     // change handler
     const onChange = e => {
@@ -38,29 +38,34 @@ const Register = () => {
     }
 
     // axios [POST] upon submission
+    const formSubmit = () => {
+        const newAccount = {
+           name: formValues.name.trim(),
+           username: formValues.username.trim(),
+           email: formValues.email.trim(),
+           password: formValues.password.trim(),
+           role_id: formValues.role_id ? 2 : 3
+       }
+    //    axios.post(`https://fitness-4-you.herokuapp.com/api/auth/register`, newAccount)
+       axios.post(`http://localhost:5000/api/auth/register`, newAccount)
+           .then(res => {
+               console.log('res: ', res.data);
+           })
+           .catch(err => {
+               console.log('err: ', err)
+           })
+           .finally(
+               setFormValues(initialFormValues))
+   }
 
-   const onSubmit = e => {
+   const onRegister = e => {
        e.preventDefault()
-       const newAccount = {
-            name: formValues.name.trim(),
-            username: formValues.username.trim(),
-            email: formValues.email.trim(),
-            password: formValues.password.trim(),
-            role_id: formValues.role_id ? 2 : 3
-        }
-        axios.post(`http://localhost:5000/api/auth/register`, newAccount)
-            .then(res => {
-                console.log('res: ', res.data);
-                setFormValues(initialFormValues)
-            })
-            .catch(err => {
-                console.log('err: ', err)
-            })
+       formSubmit()
    }
 
    return (
         <div>
-            <form onSubmit = {onSubmit}>
+            <form onSubmit = {onRegister}>
                 <label>
                     Name:
                     <input

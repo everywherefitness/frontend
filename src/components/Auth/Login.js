@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { sessionSet, sessionStart, sessionSuccess } from './../../Redux/Actions'
 
 const initialFormValues = {
     username: '',
@@ -12,7 +14,11 @@ const initialFormValues = {
 //     password: '',
 // }
 
-const Login = () => {
+const Login = (props) => {
+
+    const { sessionSet } = props
+
+    // console.log(props.session, 'in login')
 
     const navigate = useNavigate()
 
@@ -38,20 +44,29 @@ const Login = () => {
         e.preventDefault()
         const loginAttempt = {
             username: formValues.username.trim(),
-            password: formValues.password.trim()
+            password: formValues.password
         }
 
         axios.post(`http://localhost:5000/api/auth/login`, loginAttempt)
             .then(res => {
                 const { role_id, user_id, username } = res.data.user
-                localStorage.setItem('token', res.data.token)
-                localStorage.setItem("user_id", user_id);
-                localStorage.setItem("username", username);
+                sessionSet({
+                    user: {
+                        role: role_id === 2 ? 'Instructor' : 'Client',
+                        token: res.data.token,
+                        user_id: user_id,
+                        username: username
+                    }
+                })
+                console.log('successful login', )
+
                 if (role_id === 1) {
                     navigate('/admin-portal')
-                } else if (role_id === 2) {
+                }
+                if (role_id === 2) {
                     navigate(`/${user_id}/${username}/dashboard/`)
-                } else {
+                }
+                if (role_id === 3) {
                     navigate(`/${user_id}/${username}/dashboard/`)
                 }
             })
@@ -90,4 +105,10 @@ const Login = () => {
     );
 };
 
-export default Login;
+const mapStateToProps = state => {
+    return {
+        session: state.session
+    }
+}
+
+export default connect(mapStateToProps, { sessionSet, sessionStart, sessionSuccess })(Login);

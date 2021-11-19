@@ -1,12 +1,17 @@
 import { Navigate } from 'react-router-dom';
 import React from 'react';
-// import PageNotFound from './PageNotFound'
+import { connect } from 'react-redux'
 
 
-const PrivateRoute = ({ children }) => {
-    const isAuthed = localStorage.getItem('token') // returns null if the token is not present
-    // console.log(isAuthed);
+const PrivateRoute = (props) => {
+    const { children, isAuthed } = props
     return isAuthed ? children : <Navigate to='/auth/error/sessions' /> // revisit
 }
 
-export default PrivateRoute;
+const mapStateToProps = state => {
+    return({
+        isAuthed: state.isAuthed
+    })
+}
+
+export default connect(mapStateToProps, {})(PrivateRoute);

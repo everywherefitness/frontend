@@ -1,9 +1,49 @@
-import { combineReducers } from 'redux'
+import {
+    SESSION_SET,
+    SESSION_START,
+    SESSION_SUCCESS
+} from '../Actions/index'
 
-import classesReducer from './classesReducer'
-import usersReducer from './usersReducer'
+const initialState = {
+        error: '',
+        isLoading: false,
+        isAuthed: false,
+        session: {
+            user: {
+                role: '',
+                token: '',
+                user_id: '',
+                username: ''
+            }
+        }
+    }
 
-export default combineReducers({
-    classes: classesReducer,
-    users: usersReducer
-})
+const reducer = (state = initialState, action) => {
+    switch(action.type) {
+        case(SESSION_START):
+            return({
+                ...state,
+                isLoading: true
+            })
+        case(SESSION_SET):
+            // console.log('REDUCER', 'state: ', state, 'action.payload', action.payload);
+            return({
+                ...state,
+                error: '',
+                isAuthed: true,
+                isLoading: false,
+                session: action.payload
+            })
+        case(SESSION_SUCCESS):
+            return({
+                ...state,
+                isAuthed: true,
+                isLoading: false,
+                user: action.payload
+            })
+        default:
+            return state
+    }
+}
+
+export default reducer

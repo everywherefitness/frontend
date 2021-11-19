@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-
-
 import axios from 'axios'
 
 const initialFormValues = {
@@ -40,29 +38,24 @@ const Register = () => {
     }
 
     // axios [POST] upon submission
-    const formSubmit = () => {
-        const newAccount = {
-           name: formValues.name.trim(),
-           username: formValues.username.trim(),
-           email: formValues.email.trim(),
-           password: formValues.password.trim(),
-           role_id: formValues.role_id ? 2 : 3
-       }
-    //    axios.post(`https://fitness-4-you.herokuapp.com/api/auth/register`, newAccount)
-       axios.post(`http://localhost:5000/api/auth/register`, newAccount)
-           .then(res => {
-               console.log('res: ', res.data);
-           })
-           .catch(err => {
-               console.log('err: ', err)
-           })
-           .finally(
-               setFormValues(initialFormValues))
-   }
 
    const onSubmit = e => {
        e.preventDefault()
-       formSubmit()
+       const newAccount = {
+            name: formValues.name.trim(),
+            username: formValues.username.trim(),
+            email: formValues.email.trim(),
+            password: formValues.password.trim(),
+            role_id: formValues.role_id ? 2 : 3
+        }
+        axios.post(`http://localhost:5000/api/auth/register`, newAccount)
+            .then(res => {
+                console.log('res: ', res.data);
+                setFormValues(initialFormValues)
+            })
+            .catch(err => {
+                console.log('err: ', err)
+            })
    }
 
    return (

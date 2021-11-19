@@ -27,7 +27,8 @@ function App() {
           element={<LandingPage />}
         />
 
-      {/* {Auth Related} */}
+      {/* ----- {Auth Related} ----- */}
+      
         <Route
           path='/register'
           element={<Register />}
@@ -49,7 +50,8 @@ function App() {
         />
 
 
-      {/* {Client Related} */}
+      {/* ------ {Client Related} ------ */}
+
         <Route
           path='/:user_id/:username/dashboard/'
           element={
@@ -59,6 +61,16 @@ function App() {
           }
         />
 
+        <Route
+          path='/:user_id/:username/profile'
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+
+      {/* {Client Classes} */}
         <Route
           path='/:user_id/:username/enrolled'
           element={
@@ -77,16 +89,9 @@ function App() {
           }
         />
 
-        <Route
-          path='/:user_id/:username/profile'
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
 
-      {/* {Instructor Related} */}
+      {/* ----- {Instructor Related} ----- */}
+
         <Route
           path='/:user_id/:username/dashboard/'
           element={

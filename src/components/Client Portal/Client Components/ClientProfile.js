@@ -1,12 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux'
 
-const ClientProfile = () => {
+const ClientProfile = (props) => {
+
+    const { username } = props.user
+
     return (
         <div style={{"border": "3px solid red"}}>
-            Click Here to work on your profile stuff
-            <button> CLIENT PROFILE LAUNCH</button>
+            <h3>Welcome back, {username}</h3>
         </div>
     );
 };
 
-export default ClientProfile;
+const stateToProps = state =>{
+    return({
+        user: state.session.user
+    })
+}
+
+export default connect(stateToProps, {})(ClientProfile);

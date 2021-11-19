@@ -9,9 +9,9 @@ const initialState = {
         isLoading: false,
         isAuthed: false,
         session: {
+            token: '',
             user: {
                 role: '',
-                token: '',
                 user_id: '',
                 username: ''
             }
@@ -32,7 +32,10 @@ const reducer = (state = initialState, action) => {
                 error: '',
                 isAuthed: true,
                 isLoading: false,
-                session: action.payload
+                session: {
+                    token: action.payload.token,
+                    user: action.payload.user
+                }
             })
         case(SESSION_SUCCESS):
             return({

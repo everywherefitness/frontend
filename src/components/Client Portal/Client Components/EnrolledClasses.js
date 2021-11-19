@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth';
+import { connect } from 'react-redux'
 
-const ClientClasses = () => {
+const ClientClasses = (props) => {
 
-    const user_id = localStorage.getItem('user_id') // REVISIT AND CHANGE THIS
+    const { user_id } = props.user
 
     const [ myClasses, setMyClasses ] = useState([])
 
@@ -12,7 +13,7 @@ const ClientClasses = () => {
         axiosWithAuth()
             .get(`/users/${user_id}/classes`)
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 setMyClasses(res.data)
             })
             .catch(err => {
@@ -53,4 +54,10 @@ const ClientClasses = () => {
     );
 };
 
-export default ClientClasses;
+const stateToProps = state => {
+    return({
+        user: state.session.user
+    })
+}
+
+export default connect(stateToProps, {})(ClientClasses);

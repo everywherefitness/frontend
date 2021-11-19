@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axiosWithAuth from '../../../utils/axiosWithAuth'
+import { connect } from 'react-redux'
 
-const user_id = localStorage.getItem('user_id')
+const AvailableClasses = (props) => {
 
-const AvailableClasses = () => {
+    const { user_id } = props.user
+
     const [ availables, setAvailables ] = useState([])
 
     const getAvailables = () => {
@@ -29,6 +31,7 @@ const AvailableClasses = () => {
             .post(`/users/${user_id}/${class_id}`)
             .then(something =>{
                 console.log(something);
+                // revisit and make something happen here. returning res.data object
             })
             .catch(err => {
                 console.log(err);
@@ -52,4 +55,10 @@ const AvailableClasses = () => {
     );
 };
 
-export default AvailableClasses;
+const stateToProps = state => {
+    return({
+        user: state.session.user
+    })
+}
+
+export default connect(stateToProps, {})(AvailableClasses);

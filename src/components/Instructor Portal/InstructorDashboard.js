@@ -12,14 +12,16 @@ const InstructorDashboard = (props) => {
     
     const { user_id, username } = user
 
-    const userEndpoint = `/${user_id}/${username}`
-
     return (
         <div>
             {/* {revisit these and make them the Navigate instead?} */}
 
-            <Link to={`${userEndpoint}/profile`}>
+            <Link to={`/int/${username}/profile`}>
             Profile
+            </Link>
+
+            <Link to={`/int/${username}/classes/add`}>
+            Add Class
             </Link>
         </div>
 

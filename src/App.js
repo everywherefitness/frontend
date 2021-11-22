@@ -11,7 +11,9 @@ import AccessDenied from './components/Auth/Private Route/AccessDenied'
 import LandingPage from './components/Landing Page/LandingPage';
 import Enrolled from './components/Client Portal/Client Components/EnrolledClasses'
 import Available from './components/Client Portal/Client Components/AvailableClasses';
-import Profile from './components/Client Portal/Client Components/ClientProfile';
+import ClientProfile from './components/Client Portal/Client Components/ClientProfile';
+import InstructorProfile from './components/Instructor Portal/Instructor Components/InstructorProfile'
+import AddClass from './components/Instructor Portal/Instructor Components/AddClass';
 import Logout from './components/Auth/Logout';
 
 // import React, { useState } from 'react'
@@ -69,7 +71,7 @@ function App() {
           path='/cli/:username/profile'
           element={
             <PrivateRoute>
-              <Profile />
+              <ClientProfile />
             </PrivateRoute>
           }
         />
@@ -101,6 +103,24 @@ function App() {
           element={
             <PrivateRoute>
               <InstructorDashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/int/:username/profile/'
+          element={
+            <PrivateRoute>
+              <InstructorProfile />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path='/int/:username/classes/add'
+          element={
+            <PrivateRoute>
+              <AddClass />
             </PrivateRoute>
           }
         />

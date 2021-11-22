@@ -14,7 +14,7 @@ const ClientClasses = (props) => {
         axiosWithAuth()
             .get(`/users/${user_id}/classes`)
             .then(res => {
-                console.log('setenrolled res.data', res.data);
+                // console.log('setenrolled res.data', res.data);
                 setEnrolled(res.data)
             })
             .catch(err => {
@@ -32,7 +32,7 @@ const ClientClasses = (props) => {
             .delete(`/users/${user_id}/classes/${class_id}`)
             .then(res => {
                 console.log(res);
-                getEnrolled()
+                getEnrolled() // has to be a better way to do this = REVISIT
             })
             .catch(err => {
                 console.log(err);

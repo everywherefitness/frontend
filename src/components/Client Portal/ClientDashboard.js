@@ -12,18 +12,20 @@ const ClientDashboard = (props) => {
     
     const { user_id, username } = user
 
+    const userEndpoint = `/${user_id}/${username}`
+
     return (
         <div>
             {/* {revisit these and make them the Navigate instead?} */}
-            <Link to={`/${user_id}/${username}/enrolled`}>
+            <Link to={`${userEndpoint}/enrolled`}>
             Enrolled
             </Link>
             
-            <Link to={`/${user_id}/${username}/available`}>
+            <Link to={`${userEndpoint}/available`}>
             Available
             </Link>
 
-            <Link to={`/${user_id}/${username}/profile`}>
+            <Link to={`${userEndpoint}/profile`}>
             Profile
             </Link>
         </div>

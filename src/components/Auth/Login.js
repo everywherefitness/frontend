@@ -56,13 +56,13 @@ const Login = (props) => {
                 })
 
                 if (role_id === 1) {
-                    navigate('/admin-portal')
+                    navigate('/admin-portal') // revisit
                 }
-                if (role_id === 2) {
-                    navigate(`/${user_id}/${username}/dashboard/`)
+                if (role_id === 2) { // instructor
+                    navigate(`/int/${username}/dashboard/`)
                 }
-                if (role_id === 3) {
-                    navigate(`/${user_id}/${username}/dashboard/`)
+                if (role_id === 3) { // client
+                    navigate(`/cli/${username}/dashboard/`)
                 }
             })
             .catch(err => {

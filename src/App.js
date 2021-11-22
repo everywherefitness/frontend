@@ -57,7 +57,7 @@ function App() {
       {/* ------ {Client Related} ------ */}
 
         <Route
-          path='/:user_id/:username/dashboard/'
+          path='/cli/:username/dashboard/'
           element={
             <PrivateRoute>
               <ClientDashboard />
@@ -66,7 +66,7 @@ function App() {
         />
 
         <Route
-          path='/:user_id/:username/profile'
+          path='/cli/:username/profile'
           element={
             <PrivateRoute>
               <Profile />
@@ -76,7 +76,7 @@ function App() {
 
               {/* {Client Classes} */}
         <Route
-          path='/:user_id/:username/enrolled'
+          path='/cli/:username/enrolled'
           element={
             <PrivateRoute>
               <Enrolled />
@@ -85,7 +85,7 @@ function App() {
         />
 
         <Route
-          path='/:user_id/:username/available'
+          path='/cli/:username/available'
           element={
             <PrivateRoute>
               <Available />
@@ -97,7 +97,7 @@ function App() {
       {/* ----- {Instructor Related} ----- */}
 
         <Route
-          path='/:user_id/:username/dashboard/'
+          path='/int/:username/dashboard/'
           element={
             <PrivateRoute>
               <InstructorDashboard />

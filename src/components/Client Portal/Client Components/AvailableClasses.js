@@ -37,9 +37,10 @@ const AvailableClasses = (props) => {
         // console.log(class_id);
         axiosWithAuth()
             .post(`/users/${user_id}/classes/${class_id}`)
-            .then(something =>{
-                console.log('something',something);
+            .then(() =>{
+                // console.log('newClass',newClass); // just returns back the joined class object
                 // revisit and make something happen here. returning res.data object
+                // REVISIT - need to figure out how I want to make these classes like fade-out or disappear as you join them
             })
             .catch(err => {
                 console.log(err);

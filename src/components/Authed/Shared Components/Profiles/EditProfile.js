@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { connect, connectAdvanced } from 'react-redux';
+import axiosWithAuth from '../../../../utils/axiosWithAuth';
+
 
 const initialFormValues = {
     username: '',
     email: '',
     password: '',
-    role_id: '',
 }
 
 // const initialFormErrors = {
@@ -16,7 +18,10 @@ const initialFormValues = {
 //     role_id: ''
 // }
 
-const Register = () => {
+const EditProfile = (props) => {
+
+    const { user_id } = props.user
+    console.log(user_id)
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
 
@@ -37,13 +42,13 @@ const Register = () => {
     }
 
     const formSubmit = () => {
-        const newAccount = {
+        const editedAccount = {
             username: formValues.username.trim(),
             email: formValues.email.trim(),
             password: formValues.password.trim(),
-            role_id: formValues.role_id ? 2 : 3
         }
-        axios.post(`http://localhost:5000/api/auth/register`, newAccount)
+        axiosWithAuth()
+            .put(`http://localhost:5000/api/users/${user_id}`, editedAccount)
             .then(res => {
                 console.log('res: ', res.data);
             })
@@ -52,14 +57,14 @@ const Register = () => {
             })
     }
     
-    const registerNewUser = e => {
+    const editProfile = e => {
         e.preventDefault()
         formSubmit()
     }
 
    return (
         <>
-            <form onSubmit={registerNewUser}>
+            <form onSubmit={editProfile}>
                 <label>
                     Username:
                     <input
@@ -90,19 +95,25 @@ const Register = () => {
                     />
                 </label>
 
-                <label>Role:
+                {/* <label>Role:
                 <input
                     type = 'checkbox'
                     name = 'role_id'
                     onChange = {onChange}
                     value = {true ? 2 : 3}
                 />
-                </label>
+                </label> */}
 
-                <button>Become a new User</button>         
+                <button>Edit Account</button>         
             </form>
         </>
     );
 };
 
-export default Register;
+const stateToProps = state => {
+    return({
+        user: state.loggedIn.session.user
+    })
+}
+
+export default connect(stateToProps, {})(EditProfile);

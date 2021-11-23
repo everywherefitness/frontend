@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 
 const initialFormValues = {
     username: '',
@@ -16,13 +15,14 @@ const initialFormValues = {
 //     role_id: ''
 // }
 
-const Register = () => {
+const UserForm = () => {
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
 
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
     // const [ disabled, setDisabled ] = useState(true)
 
+    // change handler
     const onChange = e => {
         const { name, value, checked, type } = e.target
         const valueToUse = type === 'checkbox' ? checked : value
@@ -36,30 +36,9 @@ const Register = () => {
         // })
     }
 
-    const formSubmit = () => {
-        const newAccount = {
-            username: formValues.username.trim(),
-            email: formValues.email.trim(),
-            password: formValues.password.trim(),
-            role_id: formValues.role_id ? 2 : 3
-        }
-        axios.post(`http://localhost:5000/api/auth/register`, newAccount)
-            .then(res => {
-                console.log('res: ', res.data);
-            })
-            .catch(err => {
-                console.log('err: ', err)
-            })
-    }
-    
-    const registerNewUser = e => {
-        e.preventDefault()
-        formSubmit()
-    }
-
    return (
         <>
-            <form onSubmit={registerNewUser}>
+            <form>
                 <label>
                     Username:
                     <input
@@ -97,12 +76,11 @@ const Register = () => {
                     onChange = {onChange}
                     value = {true ? 2 : 3}
                 />
-                </label>
-
-                <button>Become a new User</button>         
+                </label>                
             </form>
         </>
     );
 };
 
-export default Register;
+
+export default UserForm;

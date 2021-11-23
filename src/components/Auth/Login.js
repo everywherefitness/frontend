@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { sessionSet, sessionStart, sessionSuccess } from './../../Redux/Actions'
+import { setSession } from './../../Redux/Actions'
 
 const initialFormValues = {
     username: '',
@@ -15,18 +15,13 @@ const initialFormValues = {
 // }
 
 const Login = (props) => {
-
-    const { sessionSet } = props
-
-    // console.log(props.session, 'in login')
-
+    const { setSession } = props
     const navigate = useNavigate()
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
     // const [ disabled, setDisabled ] = useState(true)
 
-    // change handler
     const onChange = e => {
         const { name, value, checked, type } = e.target
         const valueToUse = type === 'checkbox' ? checked : value
@@ -50,30 +45,29 @@ const Login = (props) => {
         axios.post(`http://localhost:5000/api/auth/login`, loginAttempt)
             .then(res => {
                 const { role_id, user_id, username } = res.data.user
-                sessionSet({
+                localStorage.setItem('token', res.data.token)
+                setSession({
+                    token: res.data.token,
                     user: {
                         role: role_id === 2 ? 'Instructor' : 'Client',
-                        token: res.data.token,
                         user_id: user_id,
                         username: username
                     }
                 })
-                console.log('successful login', )
 
                 if (role_id === 1) {
-                    navigate('/admin-portal')
+                    navigate('/admin-portal') // revisit
                 }
-                if (role_id === 2) {
-                    navigate(`/${user_id}/${username}/dashboard/`)
+                if (role_id === 2) { // instructor
+                    navigate(`/${user_id}&i/${username}/dashboard/`)
                 }
-                if (role_id === 3) {
-                    navigate(`/${user_id}/${username}/dashboard/`)
+                if (role_id === 3) { // client
+                    navigate(`/${user_id}&c/${username}/dashboard/`)
                 }
             })
             .catch(err => {
                 console.log('err', err);
             })
-            .finally(setFormValues(initialFormValues))
     }
 
     return (
@@ -105,10 +99,10 @@ const Login = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return {
+const stateToProps = state => {
+    return({
         session: state.session
-    }
+    })
 }
 
-export default connect(mapStateToProps, { sessionSet, sessionStart, sessionSuccess })(Login);
+export default connect(stateToProps, { setSession })(Login);

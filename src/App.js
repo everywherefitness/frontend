@@ -1,24 +1,34 @@
 import './App.css';
 
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Link } from 'react-router-dom'
+
+import LandingPage from './components/Landing Page/LandingPage';
 import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
+// import UserForm from './components/Authed/Shared Components/UserForm';
+import Register from './components/Auth/Register'
 import PrivateRoute from './components/Auth/Private Route/PrivateRoute'
-import ClientDashboard from './components/Client Portal/ClientDashboard'
-import InstructorDashboard from './components/Instructor Portal/InstructorDashboard'
 import PageNotFound from './components/Auth//Private Route/PageNotFound'
 import AccessDenied from './components/Auth/Private Route/AccessDenied'
-import LandingPage from './components/Landing Page/LandingPage';
-import Enrolled from './components/Client Portal/Client Components/EnrolledClasses'
-import Available from './components/Client Portal/Client Components/AvailableClasses';
-import Profile from './components/Client Portal/Client Components/ClientProfile';
+import ClientDashboard from './components/Authed/Client Portal/ClientDashboard'
+import Available from './components/Authed/Client Portal/Client Components/AvailableClasses'
+import Enrolled from './components/Authed/Client Portal/Client Components/EnrolledClasses'
+import InstructorDashboard from './components/Authed/Instructor Portal/InstructorDashboard'
+import InstructorClasses from './components/Authed/Instructor Portal/Instructor Components/InstructorClasses'
+import AddClass from './components/Authed/Instructor Portal/Instructor Components/AddClass'
+import Profile from './components/Authed/Shared Components/Profiles/Profile';
+import Logout from './components/Auth/Logout';
+import EditProfile from './components/Authed/Shared Components/Profiles/EditProfile';
 
-// import React, { useState } from 'react'
+
+import React from 'react'
 
 function App() {
 
   return (
     <div className="App">
+
+      <Link to='/login'>Login</Link>
+      <Link to='/logout'>logout</Link>
 
       <Routes>
 
@@ -49,57 +59,94 @@ function App() {
           element={<PageNotFound />}
         />
 
+          <Route
+            path=':username/profile'
+            element={
+              <PrivateRoute>
+                <Profile />
+              </PrivateRoute>
+            }
+          />
 
-      {/* ------ {Client Related} ------ */}
+          <Route
+            path=':username/profile/edit'
+            element={
+              <PrivateRoute>
+                <EditProfile />
+              </PrivateRoute>
+            }
+          />
 
+
+    {/* ------ {Client Related} ------ */}
         <Route
-          path='/:user_id/:username/dashboard/'
+          path='/:user_id&c/:username/dashboard/'
           element={
             <PrivateRoute>
               <ClientDashboard />
             </PrivateRoute>
           }
-        />
+          />
 
+              {/* {Client Classes} */}
         <Route
-          path='/:user_id/:username/profile'
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-        />
-
-      {/* {Client Classes} */}
-        <Route
-          path='/:user_id/:username/enrolled'
+          path='/:username/enrolled'
           element={
             <PrivateRoute>
               <Enrolled />
             </PrivateRoute>
           }
-        />
+          />
 
         <Route
-          path='/:user_id/:username/available'
+          path='/:username/available'
           element={
             <PrivateRoute>
               <Available />
             </PrivateRoute>
           }
-        />
+          />
 
 
       {/* ----- {Instructor Related} ----- */}
 
         <Route
-          path='/:user_id/:username/dashboard/'
+          path='/:user_id&i/:username/dashboard/'
           element={
             <PrivateRoute>
               <InstructorDashboard />
             </PrivateRoute>
           }
-        />
+          />
+
+
+        <Route
+          path='/:username/classes'
+          element={
+            <PrivateRoute>
+              <InstructorClasses />
+            </PrivateRoute>
+          }
+          />
+
+        <Route
+          path='/:username/classes/add'
+          element={
+            <PrivateRoute>
+              <AddClass />
+            </PrivateRoute>
+          }
+          />
+
+      {/* ----- {Logout} ----- */}
+        <Route
+          path='/logout'
+          element={
+            <PrivateRoute>
+              <Logout />
+            </PrivateRoute>
+          }
+          />
 
       </Routes>
     </div>

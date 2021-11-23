@@ -1,9 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux'
 
-const AccessDenied = (props) => {
+const AccessDenied = () => {
 
-    console.log(props.session, 'after login')
     return (
         <div>
             Access Denied
@@ -11,10 +9,5 @@ const AccessDenied = (props) => {
     );
 };
 
-const mapStateToProps = state => {
-    return({
-        session: state.session
-    })
-}
 
-export default connect(mapStateToProps, {})(AccessDenied);
+export default AccessDenied;

@@ -32,10 +32,6 @@ const Register = () => {
             ...formValues,
             [name]: valueToUse
         })
-        // setFormValues({
-        //     ...formValues,
-        //     [name]: value
-        // })
     }
 
     const formSubmit = () => {
@@ -46,9 +42,9 @@ const Register = () => {
             role_id: formValues.role_id ? 2 : 3
         }
         axios.post(`http://localhost:5000/api/auth/register`, newAccount)
-            .then(res => {
-                console.log('res: ', res.data);
+            .then(() => {
                 navigate('/login')
+                // revisit and add some type of UI
             })
             .catch(err => {
                 console.log('err: ', err)

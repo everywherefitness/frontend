@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import { connect, connectAdvanced } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { connect } from 'react-redux';
 import axiosWithAuth from '../../../../utils/axiosWithAuth';
 
 
@@ -23,6 +23,8 @@ const EditProfile = (props) => {
     const { user_id } = props.user
     console.log(user_id)
 
+    const navigate = useNavigate()
+
     const [ formValues, setFormValues ] = useState(initialFormValues)
 
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
@@ -41,7 +43,8 @@ const EditProfile = (props) => {
         // })
     }
 
-    const formSubmit = () => {
+    
+    const editSubmit = () => {
         const editedAccount = {
             username: formValues.username.trim(),
             email: formValues.email.trim(),
@@ -59,7 +62,19 @@ const EditProfile = (props) => {
     
     const editProfile = e => {
         e.preventDefault()
-        formSubmit()
+        editSubmit()
+    }
+
+    const deleteProfile = e => {
+        e.preventDefault()
+        axiosWithAuth()
+            .delete(`http://localhost:5000/api/users/${user_id}`)
+            .then(() => {
+                navigate('/')
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
 
    return (
@@ -104,8 +119,10 @@ const EditProfile = (props) => {
                 />
                 </label> */}
 
-                <button>Edit Account</button>         
+                <button>Edit Account</button>      
             </form>
+
+            <button onClick={deleteProfile}>Delete Account</button>
         </>
     );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const initialFormValues = {
@@ -19,6 +20,7 @@ const initialFormValues = {
 const Register = () => {
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
+    const navigate = useNavigate()
 
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
     // const [ disabled, setDisabled ] = useState(true)
@@ -46,6 +48,7 @@ const Register = () => {
         axios.post(`http://localhost:5000/api/auth/register`, newAccount)
             .then(res => {
                 console.log('res: ', res.data);
+                navigate('/login')
             })
             .catch(err => {
                 console.log('err: ', err)

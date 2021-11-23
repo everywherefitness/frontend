@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-// import axios from 'axios'
 import { connect } from 'react-redux';
-import axiosWithAuth from '../../../utils/axiosWithAuth';
+import axiosWithAuth from '../../../../utils/axiosWithAuth';
 
 const initialFormValues = {
     class_name: '',
@@ -164,7 +163,7 @@ const AddClass = (props) => {
 
 const stateToProps = state => {
     return({
-        user: state.session.user
+        user: state.loggedIn.session.user
     })
 }
 

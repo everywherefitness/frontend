@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
-import axiosWithAuth from '../../../utils/axiosWithAuth';
+import axiosWithAuth from '../../../../utils/axiosWithAuth';
 import { connect } from 'react-redux'
-import { fetchEnrolled, setEnrolled } from '../../../Redux/Actions'; 
+import { fetchEnrolled, setEnrolled } from '../../../../Redux/Actions/index'; 
 
 const ClientClasses = (props) => {
 
     const { isLoading, fetchEnrolled, setEnrolled } = props
     const { user_id } = props.user
-    const { enrolled } = props.enrolled
+    const { enrolled } = props.classes
 
     const getEnrolled = () => {
         fetchEnrolled()
         axiosWithAuth()
-            .get(`/users/${user_id}/classes`)
+            .get(`/users/${user_id}/cli/classes`)
             .then(res => {
                 // console.log('setenrolled res.data', res.data);
                 setEnrolled(res.data)
@@ -67,8 +67,8 @@ const ClientClasses = (props) => {
 
 const stateToProps = state => {
     return({
-        user: state.session.user,
-        enrolled: state.session.classes,
+        user: state.loggedIn.session.user,
+        classes: state.client.classes,
         isLoading: state.isLoading
     })
 }

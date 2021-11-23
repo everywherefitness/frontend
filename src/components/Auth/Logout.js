@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { sessionEnd } from '../../Redux/Actions';
+import { endSession } from '../../Redux/Actions';
 import { useNavigate } from 'react-router-dom'
 
 const Logout = (props) => {
 
     
-    const { sessionEnd } = props
+    const { endSession } = props
     const navigate = useNavigate()
     
     useEffect(() => {
         localStorage.removeItem('token')
-        sessionEnd()
+        endSession()
         navigate('/')
     })
 
@@ -26,4 +26,4 @@ const stateToProps = state => {
     })
 }
 
-export default connect(stateToProps, { sessionEnd })(Logout);
+export default connect(stateToProps, { endSession })(Logout);

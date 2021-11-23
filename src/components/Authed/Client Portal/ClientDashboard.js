@@ -6,22 +6,25 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 
-const InstructorDashboard = (props) => {
+const ClientDashboard = (props) => {
 
-    const { user } = props
-    
-    const { user_id, username } = user
+    const { user } = props.session
+    const { username } = user
+
 
     return (
         <div>
             {/* {revisit these and make them the Navigate instead?} */}
-
-            <Link to={`/int/${username}/profile`}>
-            Profile
+            <Link to={`/${username}/enrolled`}>
+            Enrolled
+            </Link>
+            
+            <Link to={`/${username}/available`}>
+            Available
             </Link>
 
-            <Link to={`/int/${username}/classes/add`}>
-            Add Class
+            <Link to={`/${username}/profile`}>
+            Profile
             </Link>
         </div>
 
@@ -30,8 +33,8 @@ const InstructorDashboard = (props) => {
 
 const stateToProps = state => {
     return({
-        user: state.session.user
+        session: state.loggedIn.session
     })
 }
 
-export default connect(stateToProps, {})(InstructorDashboard);
+export default connect(stateToProps, {})(ClientDashboard);

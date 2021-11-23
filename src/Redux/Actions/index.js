@@ -1,23 +1,23 @@
-export const SESSION_START = 'SESSION_START'
-export const SESSION_SET = 'SESSION_SET'
-export const SESSION_END = 'SESSION_END'
+export const START_SESSION = 'START_SESSION'
+export const SET_SESSION = 'SET_SESSION'
+export const END_SESSION = 'END_SESSION'
 
-export const sessionStart = () => {
-    return({ type: SESSION_START })
+export const startSession = () => {
+    return({ type: START_SESSION })
 }
 
-export const sessionSet = (session) => {
+export const setSession = (session) => {
     // console.log('ACTIONS', session)
-    return({ type: SESSION_SET, payload: session})
+    return({ type: SET_SESSION, payload: session})
 }
 
-export const sessionEnd = () => {
-    return({ type: SESSION_END })
+export const endSession = () => {
+    return({ type: END_SESSION })
 }
 
 // ------------------------ //
 
-// revist and possibly create one FETCH command
+// revist and possibly create one SET command
 export const FETCH_AVAILABLES = 'FETCH_AVAILABLES'
 export const SET_AVAILABLES = 'SET_AVAILABLES'
 export const FETCH_ENROLLED = 'FETCH_ENROLLED'
@@ -38,3 +38,16 @@ export const fetchEnrolled = () => {
 export const setEnrolled = (enrolled) => {
     return({ type: SET_ENROLLED, payload: enrolled })
 }
+
+// ------------------------------ //
+
+export const FETCH_INST_CLASSES = 'FETCH_INST_CLASSES'
+export const SET_INST_CLASSES = 'SET_INST_CLASSES'
+
+export const fetchInstClasses = () => {
+    return({ type: FETCH_INST_CLASSES })
+}
+
+export const setInstClasses = (created) => {
+    return({ type: SET_INST_CLASSES, payload: created })
+} 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { sessionSet } from './../../Redux/Actions'
+import { setSession } from './../../Redux/Actions'
 
 const initialFormValues = {
     username: '',
@@ -15,7 +15,7 @@ const initialFormValues = {
 // }
 
 const Login = (props) => {
-    const { sessionSet } = props
+    const { setSession } = props
     const navigate = useNavigate()
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
@@ -46,7 +46,7 @@ const Login = (props) => {
             .then(res => {
                 const { role_id, user_id, username } = res.data.user
                 localStorage.setItem('token', res.data.token)
-                sessionSet({
+                setSession({
                     token: res.data.token,
                     user: {
                         role: role_id === 2 ? 'Instructor' : 'Client',
@@ -59,10 +59,10 @@ const Login = (props) => {
                     navigate('/admin-portal') // revisit
                 }
                 if (role_id === 2) { // instructor
-                    navigate(`/int/${username}/dashboard/`)
+                    navigate(`/${user_id}&i/${username}/dashboard/`)
                 }
                 if (role_id === 3) { // client
-                    navigate(`/cli/${username}/dashboard/`)
+                    navigate(`/${user_id}&c/${username}/dashboard/`)
                 }
             })
             .catch(err => {
@@ -105,4 +105,4 @@ const stateToProps = state => {
     })
 }
 
-export default connect(stateToProps, { sessionSet })(Login);
+export default connect(stateToProps, { setSession })(Login);

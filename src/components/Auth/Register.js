@@ -1,46 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
+import UserForm from '../Authed/Shared Components/UserForm';
 import axios from 'axios'
 
 const initialFormValues = {
-    given_name: '',
     username: '',
     email: '',
     password: '',
     role_id: '',
 }
 
-// const initialFormErrors = {
-//     name: '',
-//     username: '',
-//     email: '',
-//     password: '',
-//     role_id: ''
-// }
+const Register = (props) => {
 
-const Register = () => {
-
-    const [ formValues, setFormValues ] = useState(initialFormValues)
-    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
-    // const [ disabled, setDisabled ] = useState(true)
-
-    // change handler
-    const onChange = e => {
-        const { name, value, checked, type } = e.target
-        const valueToUse = type === 'checkbox' ? checked : value
-        setFormValues({
-            ...formValues,
-            [name]: valueToUse
-        })
-        // setFormValues({
-        //     ...formValues,
-        //     [name]: value
-        // })
-    }
-
-    // axios [POST] upon submission
-    const formSubmit = () => {
+    console.log(props)
+    const { formValues, setFormValues } = props
+     // axios [POST] upon submission
+     const formSubmit = () => {
         const newAccount = {
-            given_name: formValues.given_name.trim(),
             username: formValues.username.trim(),
             email: formValues.email.trim(),
             password: formValues.password.trim(),
@@ -62,64 +38,19 @@ const Register = () => {
        e.preventDefault()
        formSubmit()
    }
-
-   return (
+    return (
         <div>
-            <form onSubmit = {onRegister}>
-                <label>
-                    Name:
-                    <input
-                        type = 'text'
-                        name = 'given_name'
-                        onChange = {onChange}
-                        value = {formValues.given_name}
-                    />
-                </label>
-                
-                <label>
-                    Username:
-                    <input
-                        type = 'text'
-                        name = 'username'
-                        onChange = {onChange}
-                        value = {formValues.username}
-                    />
-                </label>
-
-                <label>
-                    Password:
-                    <input
-                        type = 'password'
-                        name = 'password'
-                        onChange = {onChange}
-                        value = {formValues.password}
-                    />
-                </label>
-
-                <label>
-                    Email:
-                    <input
-                        type = 'email'
-                        name = 'email'
-                        onChange = {onChange}
-                        value = {formValues.email}
-                    />
-                </label>
-
-                <label>Role:
-                <input
-                    type = 'checkbox'
-                    name = 'role_id'
-                    onChange = {onChange}
-                    value = {true ? 2 : 3}
-                />
-                </label>
-
-                
-                <button>Become a new User</button>
-            </form>
+            <UserForm />
+            <button onClick={onRegister}>Become a new User</button>
         </div>
     );
 };
 
-export default Register;
+const stateToProps = state => {
+    return({
+        formValues: state.formValues,
+        setFormValues: state.setFormValues
+    })
+}
+
+export default connect(stateToProps, {  })(Register);

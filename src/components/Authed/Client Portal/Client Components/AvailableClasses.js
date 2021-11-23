@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import axiosWithAuth from '../../../utils/axiosWithAuth'
+import axiosWithAuth from '../../../../utils/axiosWithAuth'
 import { connect } from 'react-redux'
-import { fetchAvailables, setAvailables } from '../../../Redux/Actions';
+import { fetchAvailables, setAvailables } from '../../../../Redux/Actions';
 
 const AvailableClasses = (props) => {
 
     const { user_id } = props.user
-    const { availables } = props.availables
+    const { availables } = props.classes
     const { isLoading, fetchAvailables, setAvailables } = props
 
     const getAvailables = () => {
@@ -50,24 +50,24 @@ const AvailableClasses = (props) => {
     return (
         <div>
             Available Classes:
-            {availables.map((av) => {
-                // console.log(av);
-
-                return(
-                    <div key={av.class_id}>
-                        <h1>{av.class_name}</h1>
-                        <button onClick={() => joinClassAsClient(av.class_id)}>Join</button>
-                    </div>
-                )
-            })}
+            {availables.length === 0 ? 'No classes' :
+                availables.map((av) => {
+                    // console.log(av);
+                    return(
+                        <div key={av.class_id}>
+                            <h1>{av.class_name}</h1>
+                            <button onClick={() => joinClassAsClient(av.class_id)}>Join</button>
+                        </div>
+                    )})
+            }
         </div>
     );
 };
 
 const stateToProps = state => {
     return({
-        user: state.session.user,
-        availables: state.session.classes,
+        user: state.loggedIn.session.user,
+        classes: state.client.classes,
         isLoading: state.isLoading
     })
 }

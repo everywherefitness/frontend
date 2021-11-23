@@ -1,22 +1,54 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import UserForm from '../UserForm';
+import React, { useState } from 'react'
 import axios from 'axios'
+import { connect, connectAdvanced } from 'react-redux';
+import axiosWithAuth from '../../../../utils/axiosWithAuth';
+
+
+const initialFormValues = {
+    username: '',
+    email: '',
+    password: '',
+}
+
+// const initialFormErrors = {
+//     name: '',
+//     username: '',
+//     email: '',
+//     password: '',
+//     role_id: ''
+// }
 
 const EditProfile = (props) => {
-    
+
     const { user_id } = props.user
-    
+    console.log(user_id)
+
+    const [ formValues, setFormValues ] = useState(initialFormValues)
+
+    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
+    // const [ disabled, setDisabled ] = useState(true)
+
+    const onChange = e => {
+        const { name, value, checked, type } = e.target
+        const valueToUse = type === 'checkbox' ? checked : value
+        setFormValues({
+            ...formValues,
+            [name]: valueToUse
+        })
+        // setFormValues({
+        //     ...formValues,
+        //     [name]: value
+        // })
+    }
+
     const formSubmit = () => {
         const editedAccount = {
             username: formValues.username.trim(),
             email: formValues.email.trim(),
             password: formValues.password.trim(),
-            role_id: formValues.role_id ? 2 : 3
         }
-        console.log(editedAccount)
-    //    axios.post(`https://fitness-4-you.herokuapp.com/api/auth/register`, newAccount)
-        axios.put(`http://localhost:5000/api/users/${user_id}`, editedAccount)
+        axiosWithAuth()
+            .put(`http://localhost:5000/api/users/${user_id}`, editedAccount)
             .then(res => {
                 console.log('res: ', res.data);
             })
@@ -24,16 +56,57 @@ const EditProfile = (props) => {
                 console.log('err: ', err)
             })
     }
+    
+    const editProfile = e => {
+        e.preventDefault()
+        formSubmit()
+    }
 
-   const editProfile = e => {
-       e.preventDefault()
-       formSubmit()
-   }
-    return (
-        <div>
-            <UserForm />
-            <button onClick={editProfile}>Edit Profile</button>
-        </div>
+   return (
+        <>
+            <form onSubmit={editProfile}>
+                <label>
+                    Username:
+                    <input
+                        type = 'text'
+                        name = 'username'
+                        onChange = {onChange}
+                        value = {formValues.username}
+                    />
+                </label>
+
+                <label>
+                    Password:
+                    <input
+                        type = 'password'
+                        name = 'password'
+                        onChange = {onChange}
+                        value = {formValues.password}
+                    />
+                </label>
+
+                <label>
+                    Email:
+                    <input
+                        type = 'email'
+                        name = 'email'
+                        onChange = {onChange}
+                        value = {formValues.email}
+                    />
+                </label>
+
+                {/* <label>Role:
+                <input
+                    type = 'checkbox'
+                    name = 'role_id'
+                    onChange = {onChange}
+                    value = {true ? 2 : 3}
+                />
+                </label> */}
+
+                <button>Edit Account</button>         
+            </form>
+        </>
     );
 };
 
@@ -43,4 +116,4 @@ const stateToProps = state => {
     })
 }
 
-export default connect(stateToProps, {  })(EditProfile);
+export default connect(stateToProps, {})(EditProfile);

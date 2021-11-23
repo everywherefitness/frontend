@@ -1,6 +1,4 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import UserForm from '../Authed/Shared Components/UserForm';
+import React, { useState } from 'react'
 import axios from 'axios'
 
 const initialFormValues = {
@@ -10,47 +8,101 @@ const initialFormValues = {
     role_id: '',
 }
 
-const Register = (props) => {
+// const initialFormErrors = {
+//     name: '',
+//     username: '',
+//     email: '',
+//     password: '',
+//     role_id: ''
+// }
 
-    console.log(props)
-    const { formValues, setFormValues } = props
-     // axios [POST] upon submission
-     const formSubmit = () => {
+const Register = () => {
+
+    const [ formValues, setFormValues ] = useState(initialFormValues)
+
+    // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
+    // const [ disabled, setDisabled ] = useState(true)
+
+    const onChange = e => {
+        const { name, value, checked, type } = e.target
+        const valueToUse = type === 'checkbox' ? checked : value
+        setFormValues({
+            ...formValues,
+            [name]: valueToUse
+        })
+        // setFormValues({
+        //     ...formValues,
+        //     [name]: value
+        // })
+    }
+
+    const formSubmit = () => {
         const newAccount = {
             username: formValues.username.trim(),
             email: formValues.email.trim(),
             password: formValues.password.trim(),
             role_id: formValues.role_id ? 2 : 3
-       }
-    //    axios.post(`https://fitness-4-you.herokuapp.com/api/auth/register`, newAccount)
-       axios.post(`http://localhost:5000/api/auth/register`, newAccount)
-           .then(res => {
-               console.log('res: ', res.data);
-           })
-           .catch(err => {
-               console.log('err: ', err)
-           })
-           .finally(
-               setFormValues(initialFormValues))
-   }
+        }
+        axios.post(`http://localhost:5000/api/auth/register`, newAccount)
+            .then(res => {
+                console.log('res: ', res.data);
+            })
+            .catch(err => {
+                console.log('err: ', err)
+            })
+    }
+    
+    const registerNewUser = e => {
+        e.preventDefault()
+        formSubmit()
+    }
 
-   const onRegister = e => {
-       e.preventDefault()
-       formSubmit()
-   }
-    return (
-        <div>
-            <UserForm />
-            <button onClick={onRegister}>Become a new User</button>
-        </div>
+   return (
+        <>
+            <form onSubmit={registerNewUser}>
+                <label>
+                    Username:
+                    <input
+                        type = 'text'
+                        name = 'username'
+                        onChange = {onChange}
+                        value = {formValues.username}
+                    />
+                </label>
+
+                <label>
+                    Password:
+                    <input
+                        type = 'password'
+                        name = 'password'
+                        onChange = {onChange}
+                        value = {formValues.password}
+                    />
+                </label>
+
+                <label>
+                    Email:
+                    <input
+                        type = 'email'
+                        name = 'email'
+                        onChange = {onChange}
+                        value = {formValues.email}
+                    />
+                </label>
+
+                <label>Role:
+                <input
+                    type = 'checkbox'
+                    name = 'role_id'
+                    onChange = {onChange}
+                    value = {true ? 2 : 3}
+                />
+                </label>
+
+                <button>Become a new User</button>         
+            </form>
+        </>
     );
 };
 
-const stateToProps = state => {
-    return({
-        formValues: state.formValues,
-        setFormValues: state.setFormValues
-    })
-}
-
-export default connect(stateToProps, {  })(Register);
+export default Register;

@@ -32,7 +32,7 @@ const Profile = (props) => {
 
 const stateToProps = state =>{
     return({
-        user: state.loggedIn.session.user
+        user: state.session.loggedIn.user
     })
 }
 

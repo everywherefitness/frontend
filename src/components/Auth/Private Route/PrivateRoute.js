@@ -11,7 +11,7 @@ const PrivateRoute = (props) => {
 
 const mapStateToProps = state => {
     return({
-        isAuthed: state.loggedIn.session.isAuthed
+        isAuthed: state.session.loggedIn.isAuthed
     })
 }
 

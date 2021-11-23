@@ -18,6 +18,7 @@ import AddClass from './components/Authed/Instructor Portal/Instructor Component
 import Profile from './components/Authed/Shared Components/Profiles/Profile';
 import Logout from './components/Auth/Logout';
 import EditProfile from './components/Authed/Shared Components/Profiles/EditProfile';
+import EditClass from './components/Authed/Instructor Portal/Instructor Components/EditClass'
 
 
 import React from 'react'
@@ -59,23 +60,23 @@ function App() {
           element={<PageNotFound />}
         />
 
-          <Route
-            path=':username/profile'
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
+        <Route
+          path=':username/profile'
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
 
-          <Route
-            path=':username/profile/edit'
-            element={
-              <PrivateRoute>
-                <EditProfile />
-              </PrivateRoute>
-            }
-          />
+        <Route
+          path=':username/profile/edit'
+          element={
+            <PrivateRoute>
+              <EditProfile />
+            </PrivateRoute>
+          }
+        />
 
 
     {/* ------ {Client Related} ------ */}
@@ -134,6 +135,15 @@ function App() {
           element={
             <PrivateRoute>
               <AddClass />
+            </PrivateRoute>
+          }
+          />
+
+        <Route
+          path='/:username/classes/:class_id/edit'
+          element={
+            <PrivateRoute>
+              <EditClass />
             </PrivateRoute>
           }
           />

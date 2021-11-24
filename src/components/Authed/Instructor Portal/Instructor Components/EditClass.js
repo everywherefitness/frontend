@@ -13,8 +13,10 @@ const initialFormValues = {
     location: ''
 }
 
-const AddClass = (props) => {
+const EditClass = (props) => {
     const { user_id } = props.user
+    const { class_id } = props.classes
+    console.log(user_id, props)
 
     const [ formValues, setFormValues ] = useState(initialFormValues)
     // const [ formErrors, setFormErrors ] = useState(initialFormErrors)
@@ -22,11 +24,10 @@ const AddClass = (props) => {
 
     // change handler
     const onChange = e => {
-        const { name, value, checked, type } = e.target
-        const valueToUse = type === 'checkbox' ? checked : value
+        const { name, value } = e.target
         setFormValues({
             ...formValues,
-            [name]: valueToUse
+            [name]: value
         })
         // setFormValues({
         //     ...formValues,
@@ -35,8 +36,8 @@ const AddClass = (props) => {
     }
 
     // axios [POST] upon submission
-    const formSubmit = () => {
-        const newClass = { // how could I write a function to do this? -- revisit
+    const editSubmit = () => {
+        const editedClass = { // how could I write a function to do this? -- revisit
             class_name: formValues.class_name.trim(),
             category_id: formValues.category_id.trim(), // integer
             intensity_level: formValues.intensity_level.trim(), // integer
@@ -47,9 +48,9 @@ const AddClass = (props) => {
             location: formValues.location.trim(),
             instructor_id: user_id
        }
-    //    console.log('newClass',newClass)
+    //    console.log('editedClass',editedClass)
        axiosWithAuth()
-        .post(`http://localhost:5000/api/classes`, newClass)
+        .put(`http://localhost:5000/api/classes/${class_id}`, editedClass)
         .then(res => {
             // revisit and figure out what to do when classes are made
             console.log('res: ', res.data);
@@ -61,14 +62,14 @@ const AddClass = (props) => {
             setFormValues(initialFormValues))
    }
 
-   const onRegister = e => {
+   const onEdit = e => {
        e.preventDefault()
-       formSubmit()
+       editSubmit()
    }
 
    return (
         <div>
-            <form onSubmit = {onRegister}>
+            <form onSubmit = {onEdit}>
                 <label>
                     Class Name:
                     <input
@@ -163,8 +164,9 @@ const AddClass = (props) => {
 
 const stateToProps = state => {
     return({
-        user: state.session.loggedIn.user
+        user: state.session.loggedIn.user,
+        classes: state.instructor.classes
     })
 }
 
-export default connect(stateToProps, {})(AddClass);
+export default connect(stateToProps, {})(EditClass);

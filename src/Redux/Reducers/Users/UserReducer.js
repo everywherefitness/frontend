@@ -3,7 +3,7 @@ import { END_SESSION, SET_SESSION, START_SESSION } from '../../Actions/index'
 const initialState = {
     error: '',
     isLoading: false,
-    session: {
+    loggedIn: {
         isAuthed: false,
         token: '',
         user: {
@@ -28,8 +28,8 @@ const reducer = (state = initialState, action) => {
             return({
                 ...state,
                 isLoading: false,
-                session: {
-                    ...state.session,
+                loggedIn: {
+                    ...state.loggedIn,
                     isAuthed: true,
                     token: action.payload.token,
                     user: action.payload.user

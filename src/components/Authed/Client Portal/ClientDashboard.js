@@ -33,7 +33,7 @@ const ClientDashboard = (props) => {
 
 const stateToProps = state => {
     return({
-        session: state.loggedIn.session
+        session: state.session.loggedIn
     })
 }
 

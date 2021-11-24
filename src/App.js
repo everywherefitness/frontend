@@ -19,6 +19,7 @@ import Profile from './components/Authed/Shared Components/Profiles/Profile';
 import Logout from './components/Auth/Logout';
 import EditProfile from './components/Authed/Shared Components/Profiles/EditProfile';
 import EditClass from './components/Authed/Instructor Portal/Instructor Components/EditClass'
+import Header from './components/Header/Header';
 
 
 import React from 'react'
@@ -28,8 +29,7 @@ function App() {
   return (
     <div className="App">
 
-      <Link to='/login'>Login</Link>
-      <Link to='/logout'>logout</Link>
+      {/* <Header /> */}
 
       <Routes>
 
